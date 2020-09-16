@@ -46,7 +46,7 @@ class NegocioDB
             ->leftJoin('app_dat_turnos_servicios as ts', 'ps.id_turno_servicio', '=', 'ts.id')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+            //->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
             ->whereNull('da.deleted_at')
@@ -57,7 +57,7 @@ class NegocioDB
                 'ls.id as id',
                 'ls.precio as precio',
                 'ds.denominacion as nombre',
-                'nts.denominacion as tipo_servicio',
+              //  'nts.denominacion as tipo_servicio',
                 //'dl.id_dpa as dpa',
             ])
             ->groupBy('id')
@@ -81,7 +81,7 @@ class NegocioDB
         $detallesServicio = DB::table('app_dat_turnos_servicios as ts')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+           // ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_entidades as den', 'den.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
@@ -96,7 +96,7 @@ class NegocioDB
                     'ds.denominacion as nombre',
                     'ds.descripcion as descripcion',
                     'dl.denominacion as establecimiento',
-                    'nts.denominacion as tipo_servicio',
+                  //  'nts.denominacion as tipo_servicio',
                     'dl.telefono as telefono',
                     'dl.email as email',
                     'dl.id_dpa as dpa'
@@ -131,7 +131,7 @@ class NegocioDB
             ->leftJoin('app_dat_turnos_servicios as ts', 'ps.id_turno_servicio', '=', 'ts.id')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+            //->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
             ->where('ps.publico', '=', 1)
@@ -159,7 +159,7 @@ class NegocioDB
             ->leftJoin('app_dat_turnos_servicios as ts', 'ps.id_turno_servicio', '=', 'ts.id')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+            //->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
             ->where('ps.publico', '=', 1)
@@ -178,13 +178,14 @@ class NegocioDB
 
     public static function getServiciosByMunicipio($organismo, $id_municipio)
     {
+
         $servicios = DB::table('app_dat_plan_servicios as ps')
             ->leftJoin('app_dat_plan_agenda as dpa', 'dpa.id_dat_plan_servicio', '=', 'ps.id')
             ->leftJoin('app_dat_agenda as da', 'da.id', '=', 'dpa.id_dat_agenda')
             ->leftJoin('app_dat_turnos_servicios as ts', 'ps.id_turno_servicio', '=', 'ts.id')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+            //->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
             ->where('ps.publico', '=', 1)
@@ -199,6 +200,8 @@ class NegocioDB
             )
             ->groupBy('id')
             ->get();
+
+
         $r = [];
         foreach ($servicios as $servicio) {
             if (($servicio->cantidad - DB::table('app_dat_plan_agenda')
@@ -213,7 +216,7 @@ class NegocioDB
             ->leftJoin('app_dat_turnos_servicios as ts', 'ps.id_turno_servicio', '=', 'ts.id')
             ->leftJoin('app_dat_locales_servicios as ls', 'ts.id_local_servicio', '=', 'ls.id')
             ->leftJoin('app_dat_servicios as ds', 'ls.id_servicio', '=', 'ds.id')
-            ->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
+            //->leftJoin('app_nom_tipo_servicios as nts', 'nts.id', '=', 'ds.id_tipo_servicio')
             ->leftJoin('app_dat_entidades as de', 'de.id', '=', 'ds.id_entidad')
             ->leftJoin('app_dat_locales as dl', 'dl.id', '=', 'ls.id_local')
             ->where('ps.publico', '=', 1)

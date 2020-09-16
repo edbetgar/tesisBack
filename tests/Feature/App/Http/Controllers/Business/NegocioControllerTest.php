@@ -168,7 +168,7 @@ class NegocioControllerTest extends TestCase
             'hashed' => $hashed,
             'Content-Type' => 'application/json'
         ];
-        $id_reservacion = '357';
+        $id_reservacion = '364';
         $response = $this->get('api/reservaciones/' . $id_reservacion, $headers);
         $response->assertStatus(200);
         $response->dump();
@@ -258,6 +258,7 @@ class NegocioControllerTest extends TestCase
             'success' => true,
             'message' => 'Reservaciones realizadas satisfactoriamente'
         ]);*/
+        $response->assertStatus(200);
         $response->dump();
     }
 
@@ -284,6 +285,7 @@ class NegocioControllerTest extends TestCase
              'success' => true,
              'message' => 'Reservaciones realizadas satisfactoriamente'
          ]);*/
+        $response->assertStatus(200);
         $response->dump();
     }
     //Dairo López Molllinedo

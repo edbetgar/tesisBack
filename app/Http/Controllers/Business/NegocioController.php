@@ -30,6 +30,7 @@ class NegocioController extends Controller
      * */
     public function listarEstablecimientosPorUbicacionLocal(Request $request)
     {
+
         //TODO 1- Obtener id_dpa segun la ubicacion de la (provincia, municipio o consejo_popular)
         $wso2 = new WSO2Client(
             env('WSO2_CLIENT_ID'),
@@ -47,8 +48,10 @@ class NegocioController extends Controller
         if ($request->get('id_provincia') != null && $request->get('id_municipio') == null) {
             $id_provincia = $request->get('id_provincia');
         }
+
         $ids_municipio = [];
         if ($id_provincia != -1) {
+
             $municipios = WSO2Client::getMunicipiosByProvincia($hashed, $id_provincia);
             foreach ($municipios as $municipio) {
                 array_push($ids_municipio, $municipio->id);
@@ -56,6 +59,7 @@ class NegocioController extends Controller
             $servicios = NegocioDB::getServiciosByProvincia($organismo, $ids_municipio);
         } else {
             $servicios = NegocioDB::getServiciosByMunicipio($organismo, $request->get('id_municipio'));
+
 
         }
         return response()->json($servicios);
